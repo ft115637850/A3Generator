@@ -12,7 +12,6 @@ namespace A3Generator
     public class AdoService
     {
         private const string ORGNIZATION = "AVEVA-VSTS";
-        //private const string PAT = "alpkcbd4cs4xrlf4o4iko7j7mntj4fviqkyk74b26ztvpoxblkoa";
         private const string DEFAULT_EXPEND = "Children($expand=AssignedTo($select=UserName);$select=WorkItemId, Title, WorkItemType, State, CompletedWork,RemainingWork,OriginalEstimate,AssignedTo),AssignedTo($select=UserName)";
         private const string DEFAULT_SELECT = "WorkItemId, Title, WorkItemType, AssignedTo, StoryPoints, State";
         private readonly string _PAT;
