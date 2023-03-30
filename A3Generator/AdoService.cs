@@ -54,6 +54,10 @@ namespace A3Generator
             var requestUri = $"{_baseAddress}/_apis/projects?api-version=7.0";
             var request = new HttpRequestMessage(HttpMethod.Get, new Uri(requestUri));
             var response = await _client.SendAsync(request).ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("ADO requests failed");
+            }
             var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var result = JsonConvert.DeserializeObject<Projects>(responseContent);
             return result;
@@ -66,6 +70,10 @@ namespace A3Generator
                 var requestUri = $"{_analyticsBaseAddress}/{projectId}/_odata/v3.0-preview/WorkItems?$filter={filter}&$expand={expand}&$select={select}";
                 var request = new HttpRequestMessage(HttpMethod.Get, new Uri(requestUri));
                 var response = await _analyticsClient.SendAsync(request).ConfigureAwait(false);
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Analytics requests failed");
+                }
                 var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var result = JsonConvert.DeserializeObject<WorkItems>(responseContent);
