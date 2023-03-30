@@ -31,6 +31,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -86,7 +88,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1019, 648);
+            this.panel1.Size = new System.Drawing.Size(1106, 648);
             this.panel1.TabIndex = 2;
             // 
             // splitContainer1
@@ -98,6 +100,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.textBox3);
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.textBox4);
@@ -114,15 +118,31 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1019, 648);
+            this.splitContainer1.Size = new System.Drawing.Size(1106, 648);
             this.splitContainer1.SplitterDistance = 104;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(606, 12);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 23);
+            this.textBox3.TabIndex = 16;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(531, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(69, 15);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Orgnization";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(343, 74);
+            this.label3.Location = new System.Drawing.Point(294, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 15);
             this.label3.TabIndex = 14;
@@ -131,7 +151,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(343, 16);
+            this.label2.Location = new System.Drawing.Point(294, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(51, 15);
             this.label2.TabIndex = 13;
@@ -139,7 +159,7 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(400, 12);
+            this.textBox4.Location = new System.Drawing.Point(351, 12);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(163, 23);
             this.textBox4.TabIndex = 12;
@@ -177,7 +197,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(649, 15);
+            this.label1.Location = new System.Drawing.Point(739, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 15);
             this.label1.TabIndex = 7;
@@ -185,7 +205,7 @@
             // 
             // membersTextBox
             // 
-            this.membersTextBox.Location = new System.Drawing.Point(743, 12);
+            this.membersTextBox.Location = new System.Drawing.Point(833, 12);
             this.membersTextBox.Name = "membersTextBox";
             this.membersTextBox.Size = new System.Drawing.Size(259, 23);
             this.membersTextBox.TabIndex = 6;
@@ -194,7 +214,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(93, 41);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(909, 23);
+            this.textBox1.Size = new System.Drawing.Size(999, 23);
             this.textBox1.TabIndex = 5;
             this.textBox1.Text = "WorkItemType ne \'Task\'  and StoryPoints gt 0 and (startswith(Area/AreaPath, \'Insi" +
     "ght\\Core\\Phoenix\') or startswith(Area/AreaPath, \'Insight\\APM\'))";
@@ -234,7 +254,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.listView2);
-            this.splitContainer2.Size = new System.Drawing.Size(1019, 540);
+            this.splitContainer2.Size = new System.Drawing.Size(1106, 540);
             this.splitContainer2.SplitterDistance = 389;
             this.splitContainer2.TabIndex = 1;
             // 
@@ -254,7 +274,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1019, 389);
+            this.listView1.Size = new System.Drawing.Size(1106, 389);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -304,7 +324,7 @@
             this.listView2.GridLines = true;
             this.listView2.Location = new System.Drawing.Point(0, 0);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(1019, 147);
+            this.listView2.Size = new System.Drawing.Size(1106, 147);
             this.listView2.TabIndex = 0;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -351,7 +371,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1019, 648);
+            this.ClientSize = new System.Drawing.Size(1106, 648);
             this.Controls.Add(this.panel1);
             this.Name = "A3Generator";
             this.Text = "A3Generator";
@@ -404,5 +424,7 @@
         private Label label2;
         private TextBox textBox4;
         private Label label3;
+        private TextBox textBox3;
+        private Label label4;
     }
 }

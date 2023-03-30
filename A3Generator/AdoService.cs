@@ -11,7 +11,7 @@ namespace A3Generator
 {
     public class AdoService
     {
-        private const string ORGNIZATION = "AVEVA-VSTS";
+        
         private const string DEFAULT_EXPEND = "Children($expand=AssignedTo($select=UserName);$select=WorkItemId, Title, WorkItemType, State, CompletedWork,RemainingWork,OriginalEstimate,AssignedTo),AssignedTo($select=UserName)";
         private const string DEFAULT_SELECT = "WorkItemId, Title, WorkItemType, AssignedTo, StoryPoints, State";
         private readonly string _PAT;
@@ -20,17 +20,17 @@ namespace A3Generator
         private HttpClient _client;
         private HttpClient _analyticsClient;
 
-        public AdoService(string pat)
+        public AdoService(string pat, string orgnization)
         {
             _PAT = pat;
-            _baseAddress = $"https://dev.azure.com/{ORGNIZATION}";
+            _baseAddress = $"https://dev.azure.com/{orgnization}";
             _client = new HttpClient() { 
                 BaseAddress = new Uri(_baseAddress)
             };
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                 Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", "", _PAT))));
 
-            _analyticsBaseAddress = $"https://analytics.dev.azure.com/{ORGNIZATION}";
+            _analyticsBaseAddress = $"https://analytics.dev.azure.com/{orgnization}";
             _analyticsClient = new HttpClient()
             {
                 BaseAddress = new Uri(_analyticsBaseAddress)

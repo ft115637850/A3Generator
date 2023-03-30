@@ -295,9 +295,9 @@ namespace A3Generator
             this.label3.Text = productiviy.ToString();
         }
 
-        private void GetProjects(string pat)
+        private void GetProjects(string pat, string orgnization)
         {
-            service = new AdoService(pat);
+            service = new AdoService(pat, orgnization);
             TaskScheduler syncSch = TaskScheduler.FromCurrentSynchronizationContext();
             Task.Run(async Task<Projects>? () => await service.GetAllProjectsAsync().ConfigureAwait(false))
                 .ContinueWith(
@@ -312,11 +312,17 @@ namespace A3Generator
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBox3.Text))
+            {
+                MessageBox.Show("Orgnization is required");
+                return;
+            }
+
             var logonForm = new LogonForm();
             if (logonForm.ShowDialog(this) == DialogResult.OK)
             {
                 pat = logonForm.PAT;
-                GetProjects(pat);
+                GetProjects(pat, textBox3.Text.Trim());
             }
         }
 
@@ -328,7 +334,8 @@ namespace A3Generator
                 SelectedProject = projects.Find(x => x.Id == projectId),
                 Interation = textBox4.Text.Trim(),
                 Members = this.membersTextBox.Text.Trim().ToLowerInvariant(),
-                PAT = pat
+                PAT = pat,
+                Orgnization = textBox3.Text.Trim()
             };
 
             var inputs = JsonConvert.SerializeObject(inputCache);
@@ -345,10 +352,11 @@ namespace A3Generator
             this.comboBox1.DataSource = inputCache.Projects;
             projects = inputCache.Projects;
             this.comboBox1.SelectedValue = inputCache.SelectedProject.Id;
+            textBox3.Text = inputCache.Orgnization;
             textBox4.Text = inputCache.Interation;
             this.membersTextBox.Text = inputCache.Members;
             pat = inputCache.PAT;
-            service = new AdoService(pat);
+            service = new AdoService(pat, inputCache.Orgnization);
             button2.Enabled = true;
         }
     }
