@@ -2,6 +2,7 @@ using A3Generator.Models;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System.Diagnostics;
 using System.Text;
 
 namespace A3Generator
@@ -210,7 +211,7 @@ namespace A3Generator
             worksheet.Cells[rowIndex + i, 5].Value = userStory.StoryPoints;
             worksheet.Cells[rowIndex + i, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
             worksheet.Cells[rowIndex + i, 5].Style.Fill.BackgroundColor.SetColor(80, 221, 235, 247);
-            worksheet.Cells[rowIndex + i, 6].Value = userStory.State;
+            worksheet.Cells[rowIndex + i, 6].Value = "Resolved";
             worksheet.Cells[rowIndex + i, 6].Style.Fill.PatternType = ExcelFillStyle.Solid;
             worksheet.Cells[rowIndex + i, 6].Style.Fill.BackgroundColor.SetColor(80, 221, 235, 247);
 
@@ -240,7 +241,7 @@ namespace A3Generator
             worksheet.Cells[rowIndex + i, 3].Value = task.WorkItemType;
             worksheet.Cells[rowIndex + i, 4].Value = task.AssignedTo?.UserName;
 
-            worksheet.Cells[rowIndex + i, 6].Value = task.State;
+            worksheet.Cells[rowIndex + i, 6].Value = "Closed";
 
             worksheet.Cells[rowIndex + i, 7].Value = task.OriginalEstimate;
             worksheet.Cells[rowIndex + i, 8].Value = task.CompletedWork;
@@ -358,6 +359,17 @@ namespace A3Generator
             pat = inputCache.PAT;
             service = new AdoService(pat, inputCache.Orgnization);
             button2.Enabled = true;
+        }
+
+        private void WorkItem_DoubleClick(object sender, EventArgs e)
+        {
+            var listView = sender as ListView;
+            if (listView == null || listView.SelectedItems.Count == 0) return;
+            var projectId = this.comboBox1.SelectedValue.ToString();
+            var selectedItem = listView.SelectedItems[0] as ListViewItem;
+            var target = $"https://dev.azure.com/AVEVA-VSTS/{projectId}/_workitems/edit/{selectedItem.Text}";
+            var chrome = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            Process.Start(chrome, target);
         }
     }
 }
