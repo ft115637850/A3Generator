@@ -280,10 +280,17 @@ namespace A3Generator
                     }
                 }
 
-                foreach (var member in members)
+                if (lastStoryTotalHours > 0)
                 {
-                    var points = userStory.StoryPoints * calcHours[member] / lastStoryTotalHours;
-                    membersCalc[member] += points;
+                    foreach (var member in members)
+                    {
+                        var points = userStory.StoryPoints * calcHours[member] / lastStoryTotalHours;
+                        membersCalc[member] += points;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"There is no completed hour in {userStory.WorkItemId} {userStory.Title}");
                 }
             }
 
