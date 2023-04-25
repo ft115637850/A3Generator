@@ -9,6 +9,15 @@ namespace A3Generator.Models
 {
     public class InputCache
     {
+        [JsonProperty("Profiles")]
+        public List<Profile> Profiles { get; set; }
+    }
+
+    public class Profile
+    {
+        [JsonProperty("Name")]
+        public string Name { get; set; }
+
         [JsonProperty("PAT")]
         public string PAT { get; set; }
 
@@ -23,6 +32,12 @@ namespace A3Generator.Models
 
         [JsonProperty("Interation")]
         public string Interation { get; set; }
+
+        [JsonProperty("Query")]
+        public string Query { get; set; }
+
+        [JsonProperty("ExportFilePrefix")]
+        public string ExportFilePrefix { get; set; }
 
         [JsonProperty("Orgnization")]
         public string Orgnization { get; set; }

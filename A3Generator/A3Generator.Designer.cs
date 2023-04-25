@@ -31,6 +31,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -100,6 +102,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.comboBox2);
+            this.splitContainer1.Panel1.Controls.Add(this.button5);
             this.splitContainer1.Panel1.Controls.Add(this.textBox3);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
@@ -119,8 +123,27 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(1106, 648);
-            this.splitContainer1.SplitterDistance = 104;
+            this.splitContainer1.SplitterDistance = 132;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(174, 100);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(105, 23);
+            this.comboBox2.TabIndex = 18;
+            this.comboBox2.SelectedValueChanged += new System.EventHandler(this.comboBox2_SelectedValueChanged);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(12, 99);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(156, 23);
+            this.button5.TabIndex = 17;
+            this.button5.Text = "Save Profile";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // textBox3
             // 
@@ -254,8 +277,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.listView2);
-            this.splitContainer2.Size = new System.Drawing.Size(1106, 540);
-            this.splitContainer2.SplitterDistance = 389;
+            this.splitContainer2.Size = new System.Drawing.Size(1106, 512);
+            this.splitContainer2.SplitterDistance = 368;
             this.splitContainer2.TabIndex = 1;
             // 
             // listView1
@@ -274,7 +297,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1106, 389);
+            this.listView1.Size = new System.Drawing.Size(1106, 368);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -325,7 +348,7 @@
             this.listView2.GridLines = true;
             this.listView2.Location = new System.Drawing.Point(0, 0);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(1106, 147);
+            this.listView2.Size = new System.Drawing.Size(1106, 140);
             this.listView2.TabIndex = 0;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -428,5 +451,7 @@
         private Label label3;
         private TextBox textBox3;
         private Label label4;
+        private ComboBox comboBox2;
+        private Button button5;
     }
 }

@@ -10,18 +10,35 @@ namespace A3Generator
     public partial class A3Generator : Form
     {
         private AdoService service;
-        private List<UserStory> currentWorkItems;
         private List<Project> projects;
+        private InputCache inputCache;
+        private readonly List<UserStory> currentWorkItems;
         private string pat;
+        private bool loadComplete = false;
+        private bool savingProfile = false;
         public A3Generator()
         {
             InitializeComponent();
             currentWorkItems = new List<UserStory>();
+            inputCache = new InputCache
+            {
+                Profiles = new List<Profile>
+                {
+                    new Profile
+                    {
+                        Name = "Default"
+                    }
+                }
+            };
+            this.comboBox2.ValueMember = "Name";
+            this.comboBox2.DisplayMember = "Name";
+            this.comboBox2.DataSource = this.inputCache.Profiles;
         }
 
         private void A3Generator_Load(object sender, EventArgs e)
         {
             LoadFromCache();
+            loadComplete = true;
         }
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
@@ -336,16 +353,39 @@ namespace A3Generator
 
         private void A3Generator_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!string.IsNullOrEmpty(pat)) SaveProfile();
+        }
+
+        private void SaveProfile()
+        {
             var projectId = this.comboBox1.SelectedValue.ToString();
-            var inputCache = new InputCache {
+            var profileName = this.comboBox2.Text.ToString();
+            if (string.IsNullOrEmpty(profileName) ||string.IsNullOrEmpty(projectId))
+            {
+                MessageBox.Show("Profile Name and projectId can't be empty");
+                return;
+            }
+
+            var profile = new Profile
+            {
+                Name = profileName,
                 Projects = projects,
                 SelectedProject = projects.Find(x => x.Id == projectId),
                 Interation = textBox4.Text.Trim(),
                 Members = this.membersTextBox.Text.Trim().ToLowerInvariant(),
                 PAT = pat,
+                Query = textBox1.Text.Trim(),
+                ExportFilePrefix = textBox2.Text.Trim(),
                 Orgnization = textBox3.Text.Trim()
             };
 
+            var existing = inputCache.Profiles.Find(p => p.Name == profileName);
+            if (existing != null)
+            {
+                inputCache.Profiles.Remove(existing);
+            }
+
+            inputCache.Profiles.Add(profile);
             var inputs = JsonConvert.SerializeObject(inputCache);
             File.WriteAllText("InputCache.json", inputs);
         }
@@ -353,18 +393,31 @@ namespace A3Generator
         private void LoadFromCache()
         {
             if (!File.Exists("InputCache.json")) return;
+            
+                
             var inputs = File.ReadAllText("InputCache.json");
-            var inputCache = JsonConvert.DeserializeObject<InputCache>(inputs);
+            inputCache = JsonConvert.DeserializeObject<InputCache>(inputs);
+            if (inputCache?.Profiles?.Any() != true) return;
+
+            this.comboBox2.DataSource = this.inputCache.Profiles;
+            var profile = inputCache.Profiles.First();
+            LoadProfile(profile);
+        }
+
+        private void LoadProfile(Profile profile)
+        {
             this.comboBox1.ValueMember = "Id";
             this.comboBox1.DisplayMember = "Name";
-            this.comboBox1.DataSource = inputCache.Projects;
-            projects = inputCache.Projects;
-            this.comboBox1.SelectedValue = inputCache.SelectedProject.Id;
-            textBox3.Text = inputCache.Orgnization;
-            textBox4.Text = inputCache.Interation;
-            this.membersTextBox.Text = inputCache.Members;
-            pat = inputCache.PAT;
-            service = new AdoService(pat, inputCache.Orgnization);
+            this.comboBox1.DataSource = profile.Projects;
+            projects = profile.Projects;
+            this.comboBox1.SelectedValue = profile.SelectedProject.Id;
+            textBox3.Text = profile.Orgnization;
+            textBox4.Text = profile.Interation;
+            this.membersTextBox.Text = profile.Members;
+            pat = profile.PAT;
+            textBox1.Text = profile.Query;
+            textBox2.Text = profile.ExportFilePrefix;
+            service = new AdoService(pat, profile.Orgnization);
             button2.Enabled = true;
         }
 
@@ -377,6 +430,32 @@ namespace A3Generator
             var target = $"https://dev.azure.com/AVEVA-VSTS/{projectId}/_workitems/edit/{selectedItem.Text}";
             var chrome = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
             Process.Start(chrome, target);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            savingProfile = true;
+            var currentProfile = this.comboBox2.Text;
+            SaveProfile();
+            this.comboBox2.DataSource = null;
+            this.comboBox2.ValueMember = "Name";
+            this.comboBox2.DisplayMember = "Name";
+            this.comboBox2.DataSource = this.inputCache.Profiles;
+            this.comboBox2.SelectedValue = currentProfile;
+            savingProfile = false;
+        }
+
+        private void comboBox2_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (savingProfile == false && loadComplete && !string.IsNullOrEmpty(this.comboBox2.SelectedValue?.ToString()))
+            {
+                var profileName = this.comboBox2.SelectedValue.ToString().Trim();
+                var existing = inputCache.Profiles.Find(p => p.Name == profileName);
+                if (existing == null) return;
+                LoadProfile(existing);
+                this.listView1.Items.Clear();
+                this.listView2.Items.Clear();
+            }
         }
     }
 }
