@@ -85,7 +85,7 @@ namespace A3Generator
                     foreach (var userStory in task.Result.Value)
                     {
                         var user = userStory.AssignedTo?.UserName.ToLowerInvariant();
-                        if (!members.Contains(user))
+                        if (string.IsNullOrEmpty(user) || !members.Contains(user))
                         {
                             var isMyTeamWorkItem = userStory.Children.Any(t => !string.IsNullOrEmpty(t.AssignedTo?.UserName)
                                 && members.Contains(t.AssignedTo.UserName.ToLowerInvariant()));
